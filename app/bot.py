@@ -3,11 +3,11 @@
 # File: bot.py
 # Quiz game: Telegram (Controller/View)
 
+from json import load
 import telebot
 from telebot import types
 from flask import Flask, request, abort
 from flask_sslify import SSLify
-from json import load
 import core
 import config
 
@@ -32,13 +32,13 @@ def generate_markup(answers):
 
 def get_locale(language: str, message: str) -> str:
     """Return the message according the user's tongue"""
-    print("Localisation language:\t%s" % language)
-    print("Message code:\t\t%s" % message)
+    print(f"Localisation language:\t{language}")
+    print(f"Message code:\t\t{message}")
     with open(
-        core.Session.get_abspath(config.LOCALE_PATH), "r"
+        core.Session.get_abspath(config.LOCALE_PATH), "r", encoding="utf-8"
     ) as file:
         msg = load(file)[language][message]
-        print("Returned message:\t%s" % msg)
+        print(f"Returned message:\t{msg}")
         return msg
 
 
